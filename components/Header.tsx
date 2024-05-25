@@ -3,6 +3,7 @@
 import logo from '@/assets/logo.png'
 import { Search, User } from 'lucide-react'
 import Image from 'next/image'
+import { Button } from './ui/button';
 
 interface HeaderProps {
     currentPage: 'home' | 'about' | 'services' | 'faq';
@@ -24,9 +25,9 @@ export function Header({ currentPage }: HeaderProps) : JSX.Element {
             </nav>
             <div className="flex items-center">
                 <input type="text" placeholder="Search..." className="border p-1 rounded" />
-                <button className="bg-blue-500 text-white p-2 ml-2 rounded-full"> <Search /> </button>
+                <Button className="p-2 ml-2 rounded-full hover:bg-neutral-700"> <Search /> </Button>
 
-                <div className='cursor-pointer ml-5 border-2 p-2 border-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition duration-300'>
+                <div className='cursor-pointer ml-5 border-2 p-2 border-black rounded-full hover:bg-black hover:text-white transition duration-300'>
                     <a href="#"><User/></a>
                 </div>
             </div>

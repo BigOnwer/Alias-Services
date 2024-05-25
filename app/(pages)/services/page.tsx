@@ -30,7 +30,7 @@ export default function Services() {
                 description="Creating of Web Sites destined for business"
                 imageSrc={creattingWebSite}
                 buttonLabel="Buy"
-                buttonPush="#"
+                buttonPush="/services/websites"
                 />
             </main>
             <br /><br /><br /><br />

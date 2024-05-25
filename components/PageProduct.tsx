@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "./ui/button";
 
 interface Props {
     title: string
@@ -26,7 +27,7 @@ export function PageProduct({title, description, buttonText, buttonLink, image}:
             </div>
             <br /><br />
             <a href={buttonLink}>
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">{buttonText}</button>
+                <Button className="w-full text-lg">{buttonText}</Button>
             </a>
         </div>
     )
