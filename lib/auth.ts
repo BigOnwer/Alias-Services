@@ -13,8 +13,6 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 export const authOptions : NextAuthOptions = {
-    // @see https://github.com/prisma/prisma/issues/16117
-    // @ts-ignore
     adapter: PrismaAdapter(prisma),
     providers:[
         CredentialProvider({
