@@ -40,7 +40,12 @@ export function LoginForm() {
         setIsLoading(false)
 
         if(res?.error){
-            toast.error("Erro ao tentar entrar na conta")
+            toast.error("Erro ao tentar entrar na conta", {
+                action: {
+                    label: 'Tente Novamente',
+                    onClick: () => router.refresh()
+                }
+            })
         }else{
             toast.success("Sucesso ao entrar na conta")
             router.push('/')
@@ -98,7 +103,6 @@ export function LoginForm() {
                     type="submit"
                     className='w-full'
                     disabled={isLoading}
-                    
                 >
                     Login
                     {isLoading && (

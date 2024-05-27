@@ -4,7 +4,6 @@ import logo from '@/assets/logo.png'
 import { Search, User } from 'lucide-react'
 import Image from 'next/image'
 import { Button } from './ui/button';
-import { getCurrentUser } from '@/lib/session';
 
 interface HeaderProps {
     currentPage: 'home' | 'about' | 'services' | 'faq'

@@ -13,7 +13,7 @@ export function Card({ title, value, description, color, icon: Icon }: CardProps
                 <h2 className="text-xl font-bold">{title}</h2>
                 <Icon className={`h-6 w-6 mb-2 ${color}`}/>
             </div>
-            <p className="text-2xl my-2">R${value}</p>
+            <p className="text-2xl my-2">{value}</p>
             <span className="text-gray-500">{description}</span>
         </div>
     )

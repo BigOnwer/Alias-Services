@@ -17,7 +17,7 @@ export function Subscribe() {
             </form>
             </div>
             <div>
-                <Image src={imageCorporation} alt='pessoas construindo um quebra cabeca fundo com formato irrelugar azul' width={400}/>
+                <Image src={imageCorporation} alt='pessoas construindo um quebra cabeca fundo com formato irrelugar azul' width={400} />
             </div>
         </section>
     )

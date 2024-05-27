@@ -7,8 +7,8 @@ interface PropsChart {
 export function PieChart({value}: PropsChart) {
     const data = [
         ['Total', 'Value'],
-        ['Remuneration', 8],
-        ['Value', value],
+        ['Last', 10-value],
+        ['Now', value],
     ];
 
     const options = {
@@ -16,7 +16,7 @@ export function PieChart({value}: PropsChart) {
         is3D: false,
         slices: [
             { color: '#000000' },
-            { color: '#ffffff', offset: 0.06 }, // Adiciona um pequeno deslocamento para mostrar a borda
+            { color: '#ffffff', offset: 0.06 },
         ],
         fontName: 'Arial',
         fontSize: 14,
@@ -27,11 +27,11 @@ export function PieChart({value}: PropsChart) {
                 fontSize: 12
             }
         },
-        pieSliceText: 'percentage', // Exibe a porcentagem na fatia
+        pieSliceText: 'percentage',
         pieSliceTextStyle: {
-            color: '#000000', // Define a cor do texto da porcentagem para preto
+            color: '#000000',
         },
-        pieSliceBorderColor: '#000000', // Define a cor da borda da fatia
+        pieSliceBorderColor: '#000000',
     };
 
     return (
