@@ -1,22 +1,23 @@
 "use client"
 
-import { createContext, ReactNode, useState } from "react"
+import { createContext, ReactNode, useEffect, useState } from "react"
 import { API } from "@/lib/axios"
 
 interface Chart {
     id: string
     type: 'income' | 'outcome' | 'sale'
-    price: string
+    price: any
     createdAt: string
 }
 
 interface CreateChartValueProps {
-    price: string
+    price: any
     type: 'income' | 'outcome' | 'sale'
 }
 
 interface ChartContextType {
     card: Chart[]
+    FetchCard: () => Promise<void>
     CreateCard: (data: CreateChartValueProps) => Promise<void>
 }
 
@@ -40,10 +41,27 @@ export function CardProvider({ children }: ChartProviderProps) {
         setCard(state => [response.data, ...state])
     }
 
+    async function FetchCard() {
+        try {
+            const response = await fetch('/api/value')
+            const totalsByAuthor = await response.json()
+
+            const prices = Object.values(totalsByAuthor)
+            setCard(prices)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
+
+    useEffect(() => {
+        FetchCard()
+    }, [])
+
     return (
         <CardContext.Provider
             value={{
                 card,
+                FetchCard,
                 CreateCard
             }}
         >
