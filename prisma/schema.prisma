@@ -31,7 +31,7 @@ model Account {
 
 model ChartValue {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  price     String
+  price     Float
   type      String
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String    @db.ObjectId
