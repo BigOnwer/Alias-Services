@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 const NewCardFormSchema = z.object({
     price: z.number(),
-    type: z.enum(['income', 'outcome', 'sale']),
+    type: z.enum(['income', 'outcome']),
 })
 
 type newCardFormInput = z.infer<typeof NewCardFormSchema>
