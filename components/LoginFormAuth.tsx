@@ -1,118 +1,121 @@
-'use client'
+"use client";
+import { cn } from "@/lib/utils";
+import React, { useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-import { useState } from 'react';
-import {signIn} from 'next-auth/react'
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { Button } from './ui/button';
-import { Loader } from 'lucide-react';
+import { signIn } from "next-auth/react";
 
-interface User {
-    email: string,
-    password: string,
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
+
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+interface IUser {
+  email: string;
+  password: string;
 }
 
-export function LoginForm() {
-    const [data, setData] = useState<User>({
-        email: '',
-        password: '',
-    })
+export default function LoginForm({ className, ...props }: UserAuthFormProps) {
+  const [data, setData] = useState<IUser>({
+    email: "",
+    password: "",
+  });
 
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter();
 
-    const router = useRouter()
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    async function onSubmit(event: React.SyntheticEvent) {
-        event.preventDefault()
+  async function onSubmit(event: React.SyntheticEvent) {
+    event.preventDefault();
+    setIsLoading(true);
 
-        setIsLoading(true)
+    const res = await signIn<"credentials">("credentials", {
+      ...data,
+      redirect: false,
+    });
 
-        const res = await signIn<'credentials'>('credentials', {
-            ...data,
-            redirect: false
+    if (res?.error) {
+        toast.error('Erro ao tentar entrar na conta', {
+            action: {
+                label: 'Tente Novamente',
+                onClick: () => router.refresh()
+            }
         })
-
-        setData({
-            email: '',
-            password: '',
-        })
-
-        setIsLoading(false)
-
-        if(res?.error){
-            toast.error("Erro ao tentar entrar na conta", {
-                action: {
-                    label: 'Tente Novamente',
-                    onClick: () => router.refresh()
-                }
-            })
-        }else{
-            toast.success("Sucesso ao entrar na conta")
-            router.push('/')
-        }
+    } else {
+      router.push("/");
     }
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setData((prev) => {
-            return {...prev, [event.target.name]: event.target.value}
-        })
-    }
+    setData({
+      email: "",
+      password: "",
+    });
+    setIsLoading(false);
+  }
 
-    return (
-        <form className="mt-8 space-y-6" onSubmit={onSubmit}>
-            {/* JSON.stringify(data) */}
-            <div className="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label htmlFor="email" className="sr-only">
-                        Email address
-                    </label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        required
-                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-neutral-900 focus:border-neutral-900 focus:z-10 sm:text-sm"
-                        placeholder="Email address"
-                        disabled={isLoading}
-                        value={data.email}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password" className="sr-only">
-                        Password
-                    </label>
-                    <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        autoComplete="current-password"
-                        required
-                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-neutral-900 focus:border-neutral-900 focus:z-10 sm:text-sm"
-                        placeholder="Password"
-                        disabled={isLoading}
-                        value={data.password}
-                        onChange={handleChange}
-                    />
-                </div>
-            </div>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
 
-            <div>
-                <Button
-                    type="submit"
-                    className='w-full'
-                    disabled={isLoading}
-                >
-                    Login
-                    {isLoading && (
-                        <Loader className="mr-2 h-4 w-4 animate-spin" />
-                    )}
-                </Button>
-                <p className='text-sm'>Do not have an account? <a href='/register'><b>Create Right Now</b></a></p>
-            </div>
-        </form>
-    );
-};
-
-export default LoginForm;
+  return (
+    <div className={cn("grid gap-6", className)} {...props}>
+      <form onSubmit={onSubmit}>
+        <div className="grid gap-2">
+          <div className="grid gap-1">
+            <Label className="sr-only" htmlFor="email">
+              Email
+            </Label>
+            <Input
+              id="email"
+              placeholder="name@example.com"
+              type="email"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
+              disabled={isLoading}
+              name="email"
+              value={data.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-1">
+            <Label className="sr-only" htmlFor="password">
+              Password
+            </Label>
+            <Input
+              id="password"
+              placeholder="senha"
+              type="password"
+              autoCapitalize="none"
+              autoCorrect="off"
+              disabled={isLoading}
+              name="password"
+              value={data.password}
+              onChange={handleChange}
+            />
+          </div>
+          <Button disabled={isLoading}>
+            {isLoading && (
+              <Loader className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Enter
+          </Button>
+        </div>
+      </form>
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+          DO YOU NOT HAVE AN ACCOUNT?  <b><a href="/register">CREATE NOW</a> </b>
+          </span>
+        </div>
+        </div>
+    </div>
+  );
+}

@@ -1,148 +1,147 @@
-'use client'
+"use client";
+import { cn } from "@/lib/utils";
+import React, { useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-import { useState } from 'react';
-import {signIn} from 'next-auth/react'
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { Button } from './ui/button';
-import { Loader } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
-interface User {
-    name: string,
-    email: string,
-    password: string,
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+interface IUser {
+  name: string;
+  email: string;
+  password: string;
 }
 
-export function RegisterForm() {
-    const [data, setData] = useState<User>({
-        name: '',
-        email: '',
-        password: '',
-    })
+export function RegisterForm({ className, ...props }: UserAuthFormProps) {
 
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter();
 
-    const router = useRouter()
+  const [data, setData] = useState<IUser>({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-    async function onSubmit(event: React.SyntheticEvent) {
-        event.preventDefault()
-        setIsLoading(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-        const request = await fetch('api/users', {
-            method: 'POST',
-            headers: {
-                "Content-type": "aplication/json"
-            },
-            body: JSON.stringify(data)
+  async function onSubmit(event: React.SyntheticEvent) {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const request = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-type": "applicaition/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const response = await request.json();
+
+    console.log("USER REGISTER FORM", response);
+
+    if (!request.ok) {
+        toast.error('Erro ao criar conta', {
+            action: {
+                label: 'Tente Novamente',
+                onClick: () => router.refresh()
+            }
         })
-
-        const response = await request.json()
-
-        console.log('User Register Form', response)
-
-        if(!request.ok){
-            toast.error('Erro ao criar conta', {
-                action: {
-                    label: 'Tente Novamente',
-                    onClick: () => router.refresh()
-                }
-            })
-        }else{
-            console.log(response)
-            toast.success('Conta criada com sucesso')
-            router.push('/login')
-        }
-
-        const res = await signIn<'credentials'>('credentials', {
-            ...data,
-            redirect: false
-        })
-
-        setData({
-            name: '',
-            email: '',
-            password: '',
-        })
-
-        setIsLoading(false)
+    } else {
+      console.log(response);
+      router.push("/login");
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setData((prev) => {
-            return { ...prev, [e.target.name]: e.target.value }
-        })
-    }
+    setData({
+      name: "",
+      email: "",
+      password: "",
+    });
+    setIsLoading(false);
+  }
 
-    return (
-        <form className="mt-8 space-y-6" onSubmit={onSubmit}>
-    {/* JSON.stringify(data) */}
-    <div className="rounded-md shadow-sm -space-y-px">
-        <div>
-            <label htmlFor="name" className="sr-only">
-                Name
-            </label>
-            <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-neutral-900 focus:border-neutral-900 focus:z-10 sm:text-sm"
-                placeholder="Name"
-                disabled={isLoading}
-                value={data.name}
-                onChange={handleChange}
-            />
-        </div>
-        <div>
-            <label htmlFor="email" className="sr-only">
-                Email address
-            </label>
-            <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-neutral-900 focus:border-neutral-900 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                disabled={isLoading}
-                value={data.email}
-                onChange={handleChange}
-            />
-        </div>
-        <div>
-            <label htmlFor="password" className="sr-only">
-                Password
-            </label>
-            <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-neutral-900 focus:border-neutral-900 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                disabled={isLoading}
-                value={data.password}
-                onChange={handleChange}
-            />
-        </div>
-    </div>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
 
-    <div>
-        <Button
-            type="submit"
-            className='w-full'
-            disabled={isLoading}
-        >
-            Cadastrar
+  return (
+    <div className={cn("grid gap-6", className)} {...props}>
+      <form onSubmit={onSubmit}>
+        <div className="grid gap-2">
+          <div className="grid gap-1">
+            <Label className="sr-only" htmlFor="email">
+              Name
+            </Label>
+            <Input
+              id="name"
+              placeholder="name"
+              type="text"
+              autoCapitalize="none"
+              autoCorrect="off"
+              disabled={isLoading}
+              name="name"
+              value={data.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-1">
+            <Label className="sr-only" htmlFor="email">
+              Email
+            </Label>
+            <Input
+              id="email"
+              placeholder="name@example.com"
+              type="email"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
+              disabled={isLoading}
+              name="email"
+              value={data.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-1">
+            <Label className="sr-only" htmlFor="password">
+              Password
+            </Label>
+            <Input
+              id="password"
+              placeholder="password"
+              type="password"
+              autoCapitalize="none"
+              autoCorrect="off"
+              disabled={isLoading}
+              name="password"
+              value={data.password}
+              onChange={handleChange}
+            />
+          </div>
+          <Button disabled={isLoading}>
             {isLoading && (
-                <Loader className="mr-2 h-4 w-4 animate-spin" />
+              <Loader className="mr-2 h-4 w-4 animate-spin" />
             )}
-        </Button>
-        <p className='text-sm'>Already have an account? <a href='/login'><b>Enter</b></a></p>
+            Register
+          </Button>
+        </div>
+      </form>
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+            ALREADY HAVE AN ACCOUNT? <b><a href="/login">Enter Now</a> </b>
+          </span>
+        </div>
+      </div>
     </div>
-</form>
-
-    );
-};
+  );
+}

@@ -6,10 +6,11 @@ import { priceFormatter } from "@/utils/priceFormatter";
 
 export function Summary() {
     const summary = useSummary()
+
     return(
-        <div className="flex justify-center">
+        <div className="flex flex-wrap justify-center">
             <div>
-                <Card className="w-64 h-32 mx-5 flex justify-center items-center">
+                <Card className="w-64 h-32 flex justify-center items-center">
                     <div className="w-full m-4">
                         <header className="flex text-xl justify-between">
                             <span>Incomes</span>
@@ -19,10 +20,9 @@ export function Summary() {
                         <strong className="text-lg">{priceFormatter.format(summary.income)}</strong>
                     </div>
                 </Card>
-                <PieChart value={0.8}/>
+                <PieChart value={summary.income / 100 / 10}/>
             </div>
-
-            <div>
+            <div className="mx-5">
                 <Card className="w-64 h-32 flex justify-center items-center">
                     <div className="w-full m-4">
                         <header className="flex text-xl justify-between">
@@ -33,11 +33,11 @@ export function Summary() {
                         <strong>{priceFormatter.format(summary.outcome)}</strong>
                     </div>
                 </Card>
-                <PieChart value={7}/>
+                <PieChart value={summary.outcome / 100 / 10}/>
             </div>
 
             <div>
-                <Card className="w-64 h-32 mx-5 flex justify-center items-center">
+                <Card className="w-64 h-32 flex justify-center items-center">
                     <div className="w-full m-4">
                         <header className="flex text-xl justify-between">
                             <span>Total</span>
@@ -47,7 +47,7 @@ export function Summary() {
                         <strong>{priceFormatter.format(summary.total)}</strong>
                     </div>
                 </Card>
-                <PieChart value={3}/>
+                <PieChart value={summary.total / 100 / 10}/>
             </div>
         </div>
     )
