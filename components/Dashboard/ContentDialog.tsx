@@ -75,10 +75,12 @@ export function ContentDialog() {
 
                 <AlertDialogOverlay>
                     <form onSubmit={handleSubmit(handleRegister)}>
+                        <Input placeholder="Name" disabled={isLoading}/>
+                        <br />
                         <Input
-                            type="number"
+                            type="text"
                             placeholder="Price"
-                            {...register('price')}
+                            {...register('price', {valueAsNumber: true})}
                             disabled={isLoading}
                         />
                         <br />
@@ -108,16 +110,6 @@ export function ContentDialog() {
                                             <DollarSign className="mb-3 h-6 w-6 text-red-500" />
                                             Outcome
                                         </Label>
-                                    </div>
-                                    <div>
-                                        <RadioGroupItem value="sale" id="sales" className="peer sr-only" required/>
-                                            <Label
-                                            htmlFor="sales"
-                                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                                            >
-                                                <DollarSign className="mb-3 h-6 w-6 text-yellow-400"/>
-                                                Sale
-                                            </Label>
                                     </div>
                                 </RadioGroup>
                             )
