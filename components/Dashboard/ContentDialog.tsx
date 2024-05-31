@@ -14,7 +14,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const NewCardFormSchema = z.object({
-    price: z.string(),
+    price: z.number(),
     type: z.enum(['income', 'outcome', 'sale']),
 })
 

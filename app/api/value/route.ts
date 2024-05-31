@@ -84,18 +84,5 @@ export async function GET() {
         },
     });
 
-    const totalsByType: { [type: string]: number } = {};
-
-    card.forEach(item => {
-        const type = item.type;
-        const price = parseFloat(item.price);
-        if (!isNaN(price)) {
-            if (!totalsByType[type]) {
-                totalsByType[type] = 0;
-            }
-            totalsByType[type] += price;
-        }
-    });
-
-    return NextResponse.json(totalsByType);
+    return NextResponse.json(card);
 }

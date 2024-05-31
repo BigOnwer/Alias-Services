@@ -5,14 +5,14 @@ import { API } from "@/lib/axios"
 
 interface Chart {
     id: string
-    type: 'income' | 'outcome' | 'sale'
-    price: any
+    type: 'income' | 'outcome'
+    price: string
     createdAt: string
 }
 
 interface CreateChartValueProps {
-    price: any
-    type: 'income' | 'outcome' | 'sale'
+    price: number
+    type: 'income' | 'outcome'
 }
 
 interface ChartContextType {
@@ -43,11 +43,16 @@ export function CardProvider({ children }: ChartProviderProps) {
 
     async function FetchCard() {
         try {
-            const response = await fetch('/api/value')
-            const totalsByAuthor = await response.json()
+            const response = await API.get('/value', {
+                params: {
+                    _sort: 'createdAt',
+                    _order: 'desc',
+                }
+            })
+            const data = response.data
 
-            const prices = Object.values(totalsByAuthor)
-            setCard(prices)
+            setCard(data)
+            console.log(response)
         } catch (error) {
             console.error('Error fetching data:', error)
         }
