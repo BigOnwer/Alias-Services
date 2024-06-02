@@ -33,7 +33,7 @@ export function CardProvider({ children }: ChartProviderProps) {
     async function CreateCard(data: CreateChartValueProps) {
         const { price, type } = data
 
-        const response = await API.post('value', {
+        const response = await API.post('protected/value', {
             price,
             type,
         })
@@ -43,7 +43,7 @@ export function CardProvider({ children }: ChartProviderProps) {
 
     async function FetchCard() {
         try {
-            const response = await API.get('/value', {
+            const response = await API.get('protected/value', {
                 params: {
                     _sort: 'createdAt',
                     _order: 'desc',

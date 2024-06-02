@@ -23,14 +23,14 @@ export default function Services() {
                 description="Bot of support destined for WhatsApp"
                 imageSrc={ChatBotExemple}
                 buttonLabel="Buy"
-                buttonPush="/services/chatbot"
+                buttonPush="/login"
                 />
                 <ServicesComponent
                 title="Creation of Websites"
                 description="Creating of Web Sites destined for business"
                 imageSrc={creattingWebSite}
                 buttonLabel="Buy"
-                buttonPush="/services/websites"
+                buttonPush="/login"
                 />
             </main>
             <br /><br /><br /><br />

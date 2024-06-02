@@ -7,13 +7,15 @@ import { UserNav } from "../UserNav";
 import { useContext } from "react";
 import { CardContext } from "@/Contexts/ChartsContext";
 import { Summary } from "./Summary";
+import { Buy } from "./Buy";
 
 export function Dashboard() {
     const { card } = useContext(CardContext)
     return(
         <div>
             <HeaderDash currentPage="overview"/>
-            <Summary/>
+            <Buy/>
+            <br /><br />
             <UserNav/>
         </div>
     )

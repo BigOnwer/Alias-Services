@@ -38,6 +38,15 @@ model ChartValue {
   createdAt DateTime  @default(now())
 }
 
+model Plan {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  price       Int
+  description String?
+  authorId    String    @db.ObjectId
+  users       User    @relation(fields: [authorId], references: [id])
+}
+
 model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
@@ -45,9 +54,15 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
-  bio            String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   accounts       Account[]
   chartValue     ChartValue[]
+
+  stripeCustomerId         String?
+  stripeSubscriptionId     String?
+  stripeSubscriptionStatus String?
+  stripePriceId            String?
+
+  plans      Plan[]
 }
