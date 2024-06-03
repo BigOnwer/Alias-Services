@@ -8,7 +8,7 @@ export function HomePage() {
         <div>
             <header>
                 <Header currentPage="home"/>
-        </header>
+            </header>
         <br /><br /><br />
         <main>
             <Subscribe/>

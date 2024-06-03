@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Youtube } from "lucide-react";
-import {WhatsappLogo} from '@phosphor-icons/react';
+import WhatsappLogo from '@/assets/WhatsappLogo.svg';
+import Image from "next/image";
 
 export function Footer() {
     return (
@@ -8,7 +9,7 @@ export function Footer() {
                 <a href="#" className="mx-2"><Facebook /></a>
                 <a href="#" className="mx-2"><Instagram/></a>
                 <a href="#" className="mx-2"><Youtube/></a>
-                <a href="https://api.whatsapp.com/send/?phone=5531990641303&text=!help&type=phone_number&app_absent=0"><WhatsappLogo/></a>
+                <a href="https://api.whatsapp.com/send/?phone=5531990641303&text=!help&type=phone_number&app_absent=0" className="mx-2"><Image src={WhatsappLogo} alt="" className=""/></a>
             </div>
             <nav>
                 <ul className="flex justify-center space-x-4 mb-4">

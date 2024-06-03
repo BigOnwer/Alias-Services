@@ -46,9 +46,6 @@ export const authOptions : NextAuthOptions = {
                     throw new Error("Senha incorreta")
 
                 return user
-
-
-
             }
         })
     ],

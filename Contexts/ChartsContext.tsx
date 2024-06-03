@@ -1,76 +1,77 @@
-"use client"
+"use client";
 
-import { createContext, ReactNode, useEffect, useState } from "react"
-import { API } from "@/lib/axios"
+import { createContext, ReactNode, useEffect, useState } from "react";
+import { API } from "@/lib/axios";
 
 interface Chart {
-    id: string
-    type: 'income' | 'outcome'
-    price: string
-    createdAt: string
+    id: string;
+    type: 'income' | 'outcome';
+    price: string;
+    createdAt: string;
 }
 
 interface CreateChartValueProps {
-    price: number
-    type: 'income' | 'outcome'
+    price: number;
+    type: 'income' | 'outcome';
 }
 
 interface ChartContextType {
-    card: Chart[]
-    FetchCard: () => Promise<void>
-    CreateCard: (data: CreateChartValueProps) => Promise<void>
+    card: Chart[];
+    FetchCard: () => Promise<void>;
+    CreateCard: (data: CreateChartValueProps) => Promise<void>;
 }
 
 interface ChartProviderProps {
-    children: ReactNode
+    children: ReactNode;
 }
 
-export const CardContext = createContext({} as ChartContextType)
+// Ensure createContext is imported correctly
+export const CardContext = createContext<ChartContextType | undefined>(undefined);
 
 export function CardProvider({ children }: ChartProviderProps) {
-    const [card, setCard] = useState<Chart[]>([])
+    const [card, setCard] = useState<Chart[]>([]);
 
     async function CreateCard(data: CreateChartValueProps) {
-        const { price, type } = data
+        const { price, type } = data;
 
-        const response = await API.post('protected/value', {
-            price,
-            type,
-        })
-
-        setCard(state => [response.data, ...state])
+        try {
+            const response = await API.post('value', {
+                price,
+                type,
+            });
+            setCard((state) => [response.data, ...state]);
+        } catch (error) {
+            console.error('Error creating card:', error);
+        }
     }
 
     async function FetchCard() {
         try {
-            const response = await API.get('protected/value', {
+            const response = await API.get('value', {
                 params: {
                     _sort: 'createdAt',
                     _order: 'desc',
-                }
-            })
-            const data = response.data
-
-            setCard(data)
-            console.log(response)
+                },
+            });
+            setCard(response.data);
         } catch (error) {
-            console.error('Error fetching data:', error)
+            console.error('Error fetching data:', error);
         }
     }
 
     useEffect(() => {
-        FetchCard()
-    }, [])
+        FetchCard();
+    }, []);
 
     return (
         <CardContext.Provider
             value={{
                 card,
                 FetchCard,
-                CreateCard
+                CreateCard,
             }}
         >
             {children}
         </CardContext.Provider>
-    )
+    );
 }
