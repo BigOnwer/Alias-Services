@@ -25,8 +25,7 @@ interface ChartProviderProps {
     children: ReactNode;
 }
 
-// Ensure createContext is imported correctly
-export const CardContext = createContext<ChartContextType | undefined>(undefined);
+export const CardContext = createContext({} as ChartContextType);
 
 export function CardProvider({ children }: ChartProviderProps) {
     const [card, setCard] = useState<Chart[]>([]);
