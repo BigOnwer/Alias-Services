@@ -1,6 +1,6 @@
 import { ServicesComponent } from "@/components/Services";
-import ChatBotExemple from '@/assets/chatBotExemple.png'
-import creattingWebSite from '@/assets/creatingSite.png'
+import DashboardExemple from '@/assets/dashboardExemple.png';
+import creattingWebSite from '@/assets/creatingSite.png';
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Metadata } from "next";
@@ -18,12 +18,12 @@ export default function Services() {
             </header>
             <br /><br /><br /><br /> <br /><br /><br />
             <main className="flex justify-center ">
-                <ServicesComponent
-                title="Integration with WhatsApp"
-                description="Bot of support destined for WhatsApp"
-                imageSrc={ChatBotExemple}
+            <ServicesComponent
+                title="Business Dashboard"
+                description="Find out how your company's results are going"
+                imageSrc={DashboardExemple}
                 buttonLabel="Buy"
-                buttonPush="/login"
+                buttonPush="https://buy.stripe.com/14k9CCahQdhS3KM000"
                 />
                 <ServicesComponent
                 title="Creation of Websites"

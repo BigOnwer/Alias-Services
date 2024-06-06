@@ -1,6 +1,6 @@
 import { ServicesComponent } from "../Services";
 import { HeaderDash } from "./Header";
-import ChatBotExemple from '@/assets/chatBotExemple.png';
+import DashboardExemple from '@/assets/dashboardExemple.png';
 import creattingWebSite from '@/assets/creatingSite.png';
 
 export function Buy() {
@@ -9,9 +9,9 @@ export function Buy() {
             <br /><br /><br /><br />
             <main className="flex justify-center ">
                 <ServicesComponent
-                title="Integration with WhatsApp"
-                description="Bot of support destined for WhatsApp"
-                imageSrc={ChatBotExemple}
+                title="Business Dashboard"
+                description="Find out how your company's results are going"
+                imageSrc={DashboardExemple}
                 buttonLabel="Buy"
                 buttonPush="https://buy.stripe.com/14k9CCahQdhS3KM000"
                 />
@@ -20,7 +20,7 @@ export function Buy() {
                 description="Creating of Web Sites destined for business"
                 imageSrc={creattingWebSite}
                 buttonLabel="Buy"
-                buttonPush="/login"
+                buttonPush="#"
                 />
             </main>
         </div>

@@ -4,9 +4,14 @@ import { useContext } from "react";
 export function useSummary() {
     const { card } = useContext(CardContext);
 
+    // Adicione uma verificação para garantir que card é um array antes de usar reduce
+    if (!Array.isArray(card)) {
+        return { income: 0, outcome: 0, total: 0 };
+    }
+
     const summary = card.reduce(
         (acc, card) => {
-            const price = parseFloat(card.price)
+            const price = parseFloat(card.price);
             if (!isNaN(price)) {
                 if (card.type === 'income') {
                     acc.income += price;

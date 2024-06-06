@@ -6,14 +6,17 @@ import { useContext } from "react";
 import { CardContext } from "@/Contexts/ChartsContext";
 import { Summary } from "./Summary";
 import { Buy } from "./Buy";
+import { Sidebar } from "../SideBar";
 
 export function Dashboard() {
     return(
-        <div>
-            <HeaderDash currentPage="overview"/>
-            <Buy/>
-            <br /><br />
-            <UserNav/>
+        <div className="flex">
+            <div>
+                <Sidebar currentPage="home"/>
+            </div>
+            <div className="flex-grow">
+                <Buy/>
+            </div>
         </div>
     )
 }

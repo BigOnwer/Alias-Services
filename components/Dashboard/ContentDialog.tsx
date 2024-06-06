@@ -22,7 +22,7 @@ type newCardFormInput = z.infer<typeof NewCardFormSchema>
 
 export function ContentDialog() {
     const router = useRouter()
-    const {CreateCard} = useContext(CardContext)
+    const { CreateCard } = useContext(CardContext)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const {
@@ -36,16 +36,12 @@ export function ContentDialog() {
 
     async function handleRegister(data: newCardFormInput) {
         setIsLoading(true)
-        try{
-            const {price, type} = data
-
-            await CreateCard({
-                price,
-                type
-            })
+        try {
+            const { price, type } = data
+            await CreateCard({ price, type })
             toast.success("Sucesso ao criar novo valor")
             router.refresh()
-        }catch(error){
+        } catch (error) {
             toast.error("Erro ao tentar criar novo valor", {
                 action: {
                     label: 'Tente Novamente',
@@ -57,65 +53,63 @@ export function ContentDialog() {
         setIsLoading(false)
     }
 
-    return(
+    return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                    <Button className='h-10'>New Value +</Button>
+                <Button className='h-10 mx-2'>New Value +</Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="w-96">
+            <AlertDialogContent className="w-96 z-50">
                 <AlertDialogHeader>
                     <div className="flex items-center justify-between">
                         <AlertDialogTitle>New Value</AlertDialogTitle>
-                        <AlertDialogCancel className="border-0 "> <X/> </AlertDialogCancel>
+                        <AlertDialogCancel className="border-0 "><X /></AlertDialogCancel>
                     </div>
                     <AlertDialogDescription>
-                    Create new value for chart analysis
+                        Create new value for chart analysis
                     </AlertDialogDescription>
                 </AlertDialogHeader>
 
                 <AlertDialogOverlay>
                     <form onSubmit={handleSubmit(handleRegister)}>
-                        <Input placeholder="Name" disabled={isLoading}/>
+                        <Input placeholder="Name" disabled={isLoading} />
                         <br />
                         <Input
                             type="text"
                             placeholder="Price"
-                            {...register('price', {valueAsNumber: true})}
+                            {...register('price', { valueAsNumber: true })}
                             disabled={isLoading}
                         />
                         <br />
-
                         <Controller
-                        control={control}
-                        name="type"
-                        render={({field}) => {
-                            return(
-                                <RadioGroup defaultValue="card" onValueChange={field.onChange} value={field.value}>
-                                    <div>
-                                        <RadioGroupItem value="income" id="card" className="peer sr-only" required disabled={isLoading}/>
+                            control={control}
+                            name="type"
+                            render={({ field }) => {
+                                return (
+                                    <RadioGroup defaultValue="card" onValueChange={field.onChange} value={field.value}>
+                                        <div>
+                                            <RadioGroupItem value="income" id="card" className="peer sr-only" required disabled={isLoading} />
                                             <Label
-                                            htmlFor="card"
-                                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                                                htmlFor="card"
+                                                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                                             >
-                                                <DollarSign className="mb-3 h-6 w-6 text-green-600"/>
+                                                <DollarSign className="mb-3 h-6 w-6 text-green-600" />
                                                 Income
                                             </Label>
-                                    </div>
-                                    <div>
-                                        <RadioGroupItem value="outcome" id="apple" className="peer sr-only" required disabled={isLoading}/>
-                                        <Label
-                                        htmlFor="apple"
-                                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                                        >
-                                            <DollarSign className="mb-3 h-6 w-6 text-red-500" />
-                                            Outcome
-                                        </Label>
-                                    </div>
-                                </RadioGroup>
-                            )
-                        }}
+                                        </div>
+                                        <div>
+                                            <RadioGroupItem value="outcome" id="apple" className="peer sr-only" required disabled={isLoading} />
+                                            <Label
+                                                htmlFor="apple"
+                                                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                                            >
+                                                <DollarSign className="mb-3 h-6 w-6 text-red-500" />
+                                                Outcome
+                                            </Label>
+                                        </div>
+                                    </RadioGroup>
+                                )
+                            }}
                         />
-
                         <br />
                         <Button type="submit" className="w-full" disabled={isLoading}>Register</Button>
                     </form>
