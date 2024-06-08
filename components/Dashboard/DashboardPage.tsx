@@ -8,7 +8,7 @@ import { Summary } from "./Summary";
 import { Buy } from "./Buy";
 import { Sidebar } from "../SideBar";
 
-export function Dashboard() {
+export async function DashboardPage() {
     return(
         <div className="flex">
             <div>

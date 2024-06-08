@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Bell, CircleHelp, Home, LayoutDashboard, Settings, Menu } from 'lucide-react';
 import { UserNav } from './UserNav';
+import { Separator } from './ui/separator';
 
 interface SideProps {
   currentPage: 'home' | 'dashboard' | 'notification' | 'support';
@@ -15,6 +16,7 @@ export function Sidebar({ currentPage }: SideProps) {
 
   return (
     <>
+    <div>
       <button
         className={`md:hidden p-4 bg-transparent fixed top-0 left-0 z-40 ${isSidebarOpen ? 'text-black' : 'text-black'}`}
         onClick={toggleSidebar}
@@ -62,11 +64,16 @@ export function Sidebar({ currentPage }: SideProps) {
                 <span>Settings</span>
               </li>
             </a>
-            <li className="mt-8">
+            <Separator className='my-4'/>
+            <li>
               <UserNav/>
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+      <div>
+        <Separator orientation='vertical'/>
       </div>
     </>
   );
