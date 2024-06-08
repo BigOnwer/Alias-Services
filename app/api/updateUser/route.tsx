@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     try {
         const updatedUser = await prisma.user.update({
             where: {
-                email: session.user?.email,
+                email
             },
             data: {
                 email,
