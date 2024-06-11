@@ -2,19 +2,13 @@ import { NextAuthOptions } from "next-auth"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import CredentialProvider from "next-auth/providers/credentials"
 
-
-import { db } from "@/lib/db"
-
 import bcrypt from "bcrypt"
-
-
 import { PrismaClient } from "@prisma/client"
-
 const prisma = new PrismaClient()
 
 export const authOptions : NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
-    providers:[
+    providers: [
         CredentialProvider({
             name: "credentials",
             credentials: {
@@ -22,27 +16,26 @@ export const authOptions : NextAuthOptions = {
                 password: { label: "Password", type: "password" },
                 name: { label: "Name", type: "text", placeholder: "John Smith" },
             },
-            async authorize(credentials, req) : Promise<any>{
+            async authorize(credentials, req): Promise<any> {
 
                 console.log("Authorize method", credentials)
 
-
-                if(!credentials?.email || !credentials?.password) throw new Error("Dados de Login necessarios")
+                if (!credentials?.email || !credentials?.password) throw new Error("Dados de Login necessarios")
 
                 const user = await prisma.user.findUnique({
-                    where:{
+                    where: {
                         email: credentials?.email
                     }
                 })
 
                 console.log("USER", user)
 
-                if(!user || !user.hashedPassword) {
+                if (!user || !user.hashedPassword) {
                     throw new Error("Usuários não registrado através de credenciais")
                 }
 
                 const matchPassword = await bcrypt.compare(credentials.password, user.hashedPassword)
-                if(!matchPassword)
+                if (!matchPassword)
                     throw new Error("Senha incorreta")
 
                 return user

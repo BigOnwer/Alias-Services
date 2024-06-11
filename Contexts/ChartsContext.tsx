@@ -1,31 +1,31 @@
-"use client";
+"use client"
 
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { API } from "@/lib/axios";
 
 interface Chart {
-    id: string;
-    type: 'income' | 'outcome';
-    price: string;
-    createdAt: string;
+    id: string
+    type: 'income' | 'outcome'
+    price: string
+    createdAt: string
 }
 
 interface CreateChartValueProps {
     price: number;
-    type: 'income' | 'outcome';
+    type: 'income' | 'outcome'
 }
 
 interface ChartContextType {
-    card: Chart[];
-    FetchCard: () => Promise<void>;
-    CreateCard: (data: CreateChartValueProps) => Promise<void>;
+    card: Chart[]
+    FetchCard: () => Promise<void>
+    CreateCard: (data: CreateChartValueProps) => Promise<void>
 }
 
 interface ChartProviderProps {
     children: ReactNode;
 }
 
-export const CardContext = createContext({} as ChartContextType);
+export const CardContext = createContext({} as ChartContextType)
 
 export function CardProvider({ children }: ChartProviderProps) {
     const [card, setCard] = useState<Chart[]>([]);

@@ -1,69 +1,61 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-import { signIn } from "next-auth/react";
-
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { AuthContext } from "@/Contexts/AuthContext";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-interface IUser {
-  email: string;
-  password: string;
-}
+const NewCardFormSchema = z.object({
+  email: z.string().email('Enter with a valid email'),
+  password: z.string(),
+});
+
+type newCardFormInput = z.infer<typeof NewCardFormSchema>;
 
 export default function LoginForm({ className, ...props }: UserAuthFormProps) {
-  const [data, setData] = useState<IUser>({
-    email: "",
-    password: "",
-  });
-
+  const { handleLogin } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    reset
+  } = useForm<newCardFormInput>({
+    resolver: zodResolver(NewCardFormSchema),
+  });
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
+  async function handleForm(data: newCardFormInput) {
     setIsLoading(true);
-
-    const res = await signIn<"credentials">("credentials", {
-      ...data,
-      redirect: false,
-    });
-
-    if (res?.error) {
-        toast.error('Erro ao tentar entrar na conta', {
-            action: {
-                label: 'Tente Novamente',
-                onClick: () => router.refresh()
-            }
-        })
-    } else {
-      router.push("/");
+    try {
+      await handleLogin(data)
+      reset()
+      router.push('/')
+      toast.success('Success when trying to login')
+    } catch (error) {
+      console.log(error);
+      toast.error('Error when trying to login', {
+        action: {
+          label: 'Try again',
+          onClick: () => router.push('/')
+        }
+      })
     }
-
-    setData({
-      email: "",
-      password: "",
-    });
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
-
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
+    <div className={cn("grid gap-6", className, {...props})}>
+      <form onSubmit={handleSubmit(handleForm)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
@@ -77,9 +69,7 @@ export default function LoginForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
-              name="email"
-              value={data.email}
-              onChange={handleChange}
+              {...register('email')}
             />
           </div>
           <div className="grid gap-1">
@@ -88,14 +78,12 @@ export default function LoginForm({ className, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="password"
-              placeholder="senha"
+              placeholder="password"
               type="password"
               autoCapitalize="none"
               autoCorrect="off"
               disabled={isLoading}
-              name="password"
-              value={data.password}
-              onChange={handleChange}
+              {...register('password')}
             />
           </div>
           <Button disabled={isLoading}>

@@ -15,7 +15,6 @@ export function Sidebar({ currentPage }: SideProps) {
   };
 
   return (
-    <>
     <div>
       <button
         className={`md:hidden p-4 bg-transparent fixed top-0 left-0 z-40 ${isSidebarOpen ? 'text-black' : 'text-black'}`}
@@ -72,9 +71,5 @@ export function Sidebar({ currentPage }: SideProps) {
         </div>
       </div>
     </div>
-      <div>
-        <Separator orientation='vertical'/>
-      </div>
-    </>
   );
 }

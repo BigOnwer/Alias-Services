@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CreditCard, Home, LayoutDashboard, SunMoon, User } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import UserNav from '@/components/UserNav';
 
 interface SideProps {
   currentPage: 'settings' | 'theme' | 'billing';
@@ -50,6 +51,10 @@ export function SidebarSettings({ currentPage }: SideProps) {
                 <span>Dashboard</span>
               </li>
             </a>
+
+            <li>
+              <UserNav/>
+            </li>
           </ul>
         </div>
       </div>

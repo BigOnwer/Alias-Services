@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/SideBar";
 import { ContentDialog } from "@/components/Dashboard/ContentDialog";
 import { Summary } from "@/components/Dashboard/Summary";
 import { CardProvider } from "@/Contexts/ChartsContext";
+import { Separator } from "@/components/ui/separator";
 
 export default function Dashboard() {
 
