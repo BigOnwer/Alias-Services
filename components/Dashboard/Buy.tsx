@@ -1,13 +1,12 @@
 import { ServicesComponent } from "../Services";
-import { HeaderDash } from "./Header";
 import DashboardExemple from '@/assets/dashboardExemple.png';
 import creattingWebSite from '@/assets/creatingSite.png';
 
 export function Buy() {
     return(
-        <div>
-            <br /><br /><br /><br />
-            <main className="flex justify-center ">
+        <div className="h-screen">
+            <br /><br /><br /><br /><br />
+            <main className="flex justify-center">
                 <ServicesComponent
                 title="Business Dashboard"
                 description="Find out how your company's results are going"

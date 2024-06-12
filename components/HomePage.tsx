@@ -2,6 +2,7 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Services } from "./ServicesCard";
 import { Subscribe } from "./Subscribe";
+import { Separator } from "./ui/separator";
 
 export function HomePage() {
     return(
@@ -19,6 +20,7 @@ export function HomePage() {
             </div>
         </main>
             <br /><br /><br />
+            <Separator/>
         <footer>
             <Footer/>
         </footer>

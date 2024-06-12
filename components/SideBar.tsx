@@ -1,75 +1,127 @@
-import { useState } from 'react';
-import { Bell, CircleHelp, Home, LayoutDashboard, Settings, Menu } from 'lucide-react';
-import { UserNav } from './UserNav';
-import { Separator } from './ui/separator';
+import Link from 'next/link'
 
-interface SideProps {
-  currentPage: 'home' | 'dashboard' | 'notification' | 'support';
+import { cn } from '@/lib/utils'
+
+export type DashboardSidebarGenericProps<T = unknown> = {
+  children: React.ReactNode
+  className?: string
+} & T
+
+export function DashboardSidebar({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return (
+    <aside
+      className={cn([
+        'border-r border-border flex flex-col space-y-6 bg-secondary/5',
+        className,
+      ])}
+    >
+      {children}
+    </aside>
+  )
 }
 
-export function Sidebar({ currentPage }: SideProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
+export function DashboardSidebarHeader({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
   return (
-    <div>
-      <button
-        className={`md:hidden p-4 bg-transparent fixed top-0 left-0 z-40 ${isSidebarOpen ? 'text-black' : 'text-black'}`}
-        onClick={toggleSidebar}
-      >
-        <Menu />
-      </button>
+    <header
+      className={cn([
+        'px-6 h-12 flex items-center border-b border-border',
+        className,
+      ])}
+    >
+      {children}
+    </header>
+  )
+}
 
-      <div className={`flex flex-col h-screen p-4 fixed top-0 left-0 z-30 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative`}>
-        <div className="flex items-center justify-center">
-          <span className='text-xl font-bold'>Dashboard</span>
-        </div>
-        <div className="mt-8">
-          <ul>
-            <a href="/">
-              <li className={`flex items-center p-2 hover:bg-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-300 hover:text-gray-700 cursor-pointer rounded-lg my-2 ${currentPage === 'home' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
-                <Home className="mr-4" />
-                <span>Home</span>
-              </li>
-            </a>
-            <a href="/dashboard">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg ${currentPage === 'dashboard' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
-                <LayoutDashboard className="mr-4" />
-                <span>Dashboard</span>
-              </li>
-            </a>
-          </ul>
-        </div>
-        <div className="mt-auto">
-          <ul>
-            <a href="#">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg ${currentPage === 'notification' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
-                <Bell className="mr-4" />
-                <span>Notification</span>
-              </li>
-            </a>
-            <a href="#">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg ${currentPage === 'support' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
-                <CircleHelp className="mr-4" />
-                <span>Support</span>
-              </li>
-            </a>
-            <a href="/settings">
-              <li className="flex items-center p-2 hover:bg-gray-300 hover:text-neutral-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg">
-                <Settings className="mr-4" />
-                <span>Settings</span>
-              </li>
-            </a>
-            <Separator className='my-4'/>
-            <li>
-              <UserNav/>
-            </li>
-          </ul>
-        </div>
-      </div>
+export function DashboardSidebarHeaderTitle({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return <h2 className={cn(['', className])}>{children}</h2>
+}
+
+export function DashboardSidebarMain({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return <main className={cn(['px-3', className])}>{children}</main>
+}
+
+export function DashboardSidebarNav({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return <nav className={cn(['', className])}>{children}</nav>
+}
+
+export function DashboardSidebarNavHeader({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return <header className={cn(['', className])}>{children}</header>
+}
+
+export function DashboardSidebarNavHeaderTitle({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return (
+    <div
+      className={cn([
+        'text-[0.6rem] uppercase text-muted-foreground ml-3',
+        className,
+      ])}
+    >
+      {children}
     </div>
-  );
+  )
+}
+
+export function DashboardSidebarNavMain({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return <main className={cn(['flex flex-col', className])}>{children}</main>
+}
+
+type DashboardSidebarNavLinkProps = {
+  href: string
+  active?: boolean
+}
+
+export function DashboardSidebarNavLink({
+  className,
+  children,
+  href,
+  active,
+}: DashboardSidebarGenericProps<DashboardSidebarNavLinkProps>) {
+  return (
+    <Link
+      href={href}
+      className={cn([
+        'flex items-center text-xs px-3 py-2 rounded-md',
+        active && 'bg-secondary',
+        className,
+      ])}
+    >
+      {children}
+    </Link>
+  )
+}
+
+export function DashboardSidebarFooter({
+  className,
+  children,
+}: DashboardSidebarGenericProps) {
+  return (
+    <footer className={cn(['p-6 mt-auto border-t border-border', className])}>
+      {children}
+    </footer>
+  )
 }

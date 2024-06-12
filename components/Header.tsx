@@ -9,19 +9,18 @@ interface HeaderProps {
     currentPage: 'home' | 'about' | 'services' | 'faq'
 }
 
-export async function Header({ currentPage }: HeaderProps) {
-
+export function Header({ currentPage }: HeaderProps) {
     return(
-        <header className="fixed top-0 left-0 right-0 flex justify-between items-center p-3 bg-white shadow-md">
+        <header className="fixed top-0 left-0 right-0 flex justify-between items-center p-3 bg-white dark:bg-black shadow-md">
             <a href='/' className="flex items-center">
                 <Image src={logo} alt="prisma com degrade e fundo escuro" width={130}/>
             </a>
             <nav>
                 <ul className="flex space-x-4">
-                    <li><a href="/" className={`text-gray-800 ${currentPage === 'home' ? 'font-bold underline' : 'hover:text-gray-600'}`}>Home</a></li>
-                    <li><a href="/services" className={`text-gray-800 ${currentPage === 'services' ? 'font-bold underline' : 'hover:text-gray-600'}`}>Services</a></li>
-                    <li><a href="#" className={`text-gray-800 ${currentPage === 'about' ? 'font-bold underline' : 'hover:text-gray-600'}`}>About</a></li>
-                    <li><a href="#" className={`text-gray-800 ${currentPage === 'faq' ? 'font-bold underline' : 'hover:text-gray-600'}`}>FAQ</a></li>
+                    <li><a href="/" className={`text-gray-800 dark:text-gray-300 ${currentPage === 'home' ? 'font-bold underline' : 'hover:text-gray-600'}`}>Home</a></li>
+                    <li><a href="/services" className={`text-gray-800 dark:text-gray-300 ${currentPage === 'services' ? 'font-bold underline' : 'hover:text-gray-600'}`}>Services</a></li>
+                    <li><a href="#" className={`text-gray-800 dark:text-gray-300 ${currentPage === 'about' ? 'font-bold underline' : 'hover:text-gray-600'}`}>About</a></li>
+                    <li><a href="#" className={`text-gray-800 dark:text-gray-300 ${currentPage === 'faq' ? 'font-bold underline' : 'hover:text-gray-600'}`}>FAQ</a></li>
                 </ul>
             </nav>
             <div className="flex items-center">

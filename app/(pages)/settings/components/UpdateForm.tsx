@@ -47,7 +47,7 @@ export function UpdateForm() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex justify-center">
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <CardTitle>Update Profile</CardTitle>
