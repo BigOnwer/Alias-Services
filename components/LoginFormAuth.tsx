@@ -28,8 +28,7 @@ export default function LoginForm({ className, ...props }: UserAuthFormProps) {
 
   const {
     register,
-    handleSubmit,
-    reset
+    handleSubmit
   } = useForm<newCardFormInput>({
     resolver: zodResolver(NewCardFormSchema),
   });
@@ -38,7 +37,6 @@ export default function LoginForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true);
     try {
       await handleLogin(data)
-      reset()
       router.push('/')
       toast.success('Success when trying to login')
     } catch (error) {

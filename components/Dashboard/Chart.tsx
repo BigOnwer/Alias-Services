@@ -37,8 +37,8 @@ export function PieChart({ value }: PropsChart) {
         title: '',
         is3D: false,
         slices: [
-            { color: '#000000' },
-            { color: '#ffffff', offset: 0.06 },
+            { color: '#000000', borderColor: '#ffffff' }, // Parte preta com borda branca
+            { color: '#ffffff', borderColor: '#000000', offset: 0.06 }, // Parte branca com borda preta
         ],
         fontName: 'Arial',
         fontSize: 14,
@@ -53,7 +53,7 @@ export function PieChart({ value }: PropsChart) {
         pieSliceTextStyle: {
             color: '#000000',
         },
-        pieSliceBorderColor: '#000000',
+        backgroundColor: 'transparent' // Define o fundo como transparente
     };
 
     return (

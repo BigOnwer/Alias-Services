@@ -1,150 +1,76 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { updateProfileSchema } from '../schemas';
-import { z } from 'zod';
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
-import { SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Session } from 'next-auth';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
-import { toast } from 'sonner';
-import axios from 'axios';
-import { signIn, useSession } from 'next-auth/react';
-import { Avatar } from '@radix-ui/react-avatar';
-import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/Contexts/AuthContext";
+import { toast } from "sonner";
 
-type ProfileFormProps = {
-    defaultValues: Session['user'];
-};
+const NewCardFormSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email('Enter with a valid email'),
+});
 
-export function UpdateForm({ defaultValues }: ProfileFormProps) {
-    const { data: session } = useSession();
-    const user = session?.user;
+type newCardFormInput = z.infer<typeof NewCardFormSchema>;
 
+export function UpdateForm() {
+    const { handleUpdate } = useContext(AuthContext);
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const form = useForm<z.infer<typeof updateProfileSchema>>({
-        resolver: zodResolver(updateProfileSchema),
-        defaultValues: {
-            name: defaultValues?.name ?? '',
-            email: defaultValues?.email ?? '',
-        },
+    const { register, handleSubmit } = useForm<newCardFormInput>({
+        resolver: zodResolver(NewCardFormSchema),
     });
 
-    const onSubmit = form.handleSubmit(async (data) => {
+    async function handleForm(data: newCardFormInput) {
+        setIsLoading(true);
         try {
-            const formData = new FormData();
-            formData.append('name', data.name);
-            formData.append('email', data.email);
-            if (data.password) {
-                formData.append('password', data.password);
-            }
-
-            await axios.post('/api/updateProfile', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                withCredentials: true,
-            });
-
-            if (data.password) {
-                await signIn('credentials', {
-                    redirect: false,
-                    email: data.email,
-                    password: data.password,
-                });
-            }
-
-            toast.success('Seu perfil foi atualizado com sucesso.');
-            router.refresh();
+            const { name, email } = data;
+            console.log("Form Data:", data);
+            await handleUpdate({ name, email });
         } catch (error) {
-            toast.error('Ocorreu um erro ao atualizar seu perfil.');
+            console.log(error);
+            toast.error('Error when trying to update profile', {
+                action: {
+                    label: 'Try again',
+                    onClick: () => router.push('/'),
+                },
+            });
         }
-    });
+        setIsLoading(false);
+    }
 
     return (
-        <Form {...form}>
-            <div className='flex justify-center my-5'>
-                <form onSubmit={onSubmit} className="space-y-8 w-1/2">
-                    <Card>
-                        <CardHeader>
-                            <div className='flex justify-between'>
-                                <div>
-                                    <CardTitle>Update Profile</CardTitle>
-                                    <CardDescription>
-                                        Manage your personal information and profile image.
-                                    </CardDescription>
-                                </div>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Nome</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Enter your name" {...field} required/>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Enter your email" {...field} required/>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Input type="password" placeholder="Enter your password" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </CardContent>
-                    </Card>
-
-                    <SheetFooter className="mt-auto">
-                        <Button disabled={form.formState.isSubmitting} type="submit">
-                            {form.formState.isSubmitting ? 'Salvando...' : 'Salvar alterações'}
+        <div className="flex items-center justify-center min-h-screen">
+            <Card className="w-full max-w-md">
+                <CardHeader>
+                    <CardTitle>Update Profile</CardTitle>
+                    <CardDescription>Manage your personal information and profile image.</CardDescription>
+                </CardHeader>
+                <form onSubmit={handleSubmit(handleForm)}>
+                    <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input id="email" type="email" placeholder="m@example.com" {...register('email')} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="name">Name</Label>
+                            <Input id="name" placeholder="Enter your name" {...register('name')} />
+                        </div>
+                    </CardContent>
+                    <CardFooter>
+                        <Button className="ml-auto" type="submit" disabled={isLoading}>
+                            {isLoading ? "Saving..." : "Save Changes"}
                         </Button>
-                    </SheetFooter>
+                    </CardFooter>
                 </form>
-            </div>
-        </Form>
+            </Card>
+        </div>
     );
 }

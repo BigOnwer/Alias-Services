@@ -33,7 +33,7 @@ export function Summary() {
                         <strong>{priceFormatter.format(summary.outcome)}</strong>
                     </div>
                 </Card>
-                <PieChart value={summary.outcome / 100 / 10}/>
+                    <PieChart value={summary.outcome / 100 / 10}/>
             </div>
 
             <div className="w-full sm:w-1/2 lg:w-1/3 p-2">

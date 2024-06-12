@@ -23,20 +23,20 @@ export function Sidebar({ currentPage }: SideProps) {
         <Menu />
       </button>
 
-      <div className={`flex flex-col h-screen p-4 bg-white text-black fixed top-0 left-0 z-30 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative`}>
+      <div className={`flex flex-col h-screen p-4 fixed top-0 left-0 z-30 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative`}>
         <div className="flex items-center justify-center">
           <span className='text-xl font-bold'>Dashboard</span>
         </div>
         <div className="mt-8">
           <ul>
             <a href="/">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 cursor-pointer rounded-lg my-2 ${currentPage === 'home' ? 'font-bold bg-neutral-300' : ''}`}>
+              <li className={`flex items-center p-2 hover:bg-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-300 hover:text-gray-700 cursor-pointer rounded-lg my-2 ${currentPage === 'home' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
                 <Home className="mr-4" />
                 <span>Home</span>
               </li>
             </a>
             <a href="/dashboard">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 cursor-pointer rounded-lg ${currentPage === 'dashboard' ? 'font-bold bg-neutral-300' : ''}`}>
+              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg ${currentPage === 'dashboard' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
                 <LayoutDashboard className="mr-4" />
                 <span>Dashboard</span>
               </li>
@@ -46,19 +46,19 @@ export function Sidebar({ currentPage }: SideProps) {
         <div className="mt-auto">
           <ul>
             <a href="#">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 cursor-pointer rounded-lg ${currentPage === 'notification' ? 'font-bold bg-neutral-300' : ''}`}>
+              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg ${currentPage === 'notification' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
                 <Bell className="mr-4" />
                 <span>Notification</span>
               </li>
             </a>
             <a href="#">
-              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 cursor-pointer rounded-lg ${currentPage === 'support' ? 'font-bold bg-neutral-300' : ''}`}>
+              <li className={`flex items-center p-2 hover:bg-gray-300 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg ${currentPage === 'support' ? 'font-bold bg-neutral-300 dark:bg-neutral-800' : ''}`}>
                 <CircleHelp className="mr-4" />
                 <span>Support</span>
               </li>
             </a>
             <a href="/settings">
-              <li className="flex items-center p-2 hover:bg-gray-300 hover:text-neutral-700 cursor-pointer rounded-lg">
+              <li className="flex items-center p-2 hover:bg-gray-300 hover:text-neutral-700 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer rounded-lg">
                 <Settings className="mr-4" />
                 <span>Settings</span>
               </li>

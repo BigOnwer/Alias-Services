@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,72 +8,55 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AuthContext } from "@/Contexts/AuthContext";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-interface IUser {
-  name: string;
-  email: string;
-  password: string;
-}
+const NewCardFormSchema = z.object({
+  name: z.string(),
+  email: z.string().email('Enter with a valid email'),
+  password: z.string(),
+});
+
+type newCardFormInput = z.infer<typeof NewCardFormSchema>;
 
 export function RegisterForm({ className, ...props }: UserAuthFormProps) {
+  const { handleRegister } = useContext(AuthContext);
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const router = useRouter();
-
-  const [data, setData] = useState<IUser>({
-    name: "",
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit
+  } = useForm<newCardFormInput>({
+    resolver: zodResolver(NewCardFormSchema),
   });
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
+  async function handleForm(data: newCardFormInput) {
     setIsLoading(true);
-
-    const request = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-type": "applicaition/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const response = await request.json();
-
-    console.log("USER REGISTER FORM", response);
-
-    if (!request.ok) {
-        toast.error('Erro ao criar conta', {
-            action: {
-                label: 'Tente Novamente',
-                onClick: () => router.refresh()
-            }
-        })
-    } else {
-      console.log(response);
-      router.push("/login");
+    try{
+      const {name, email, password} = data
+      handleRegister({name, email, password})
+      toast.success('Success when trying to login')
+      router.push('/')
+    } catch (error) {
+      console.log(error);
+      toast.error('Error when trying to login', {
+        action: {
+          label: 'Try again',
+          onClick: () => router.push('/')
+        }
+      })
     }
-
-    setData({
-      name: "",
-      email: "",
-      password: "",
-    });
     setIsLoading(false);
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
-
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(handleForm)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
@@ -86,9 +69,7 @@ export function RegisterForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoCorrect="off"
               disabled={isLoading}
-              name="name"
-              value={data.name}
-              onChange={handleChange}
+              {...register('name')}
             />
           </div>
           <div className="grid gap-1">
@@ -103,9 +84,7 @@ export function RegisterForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
-              name="email"
-              value={data.email}
-              onChange={handleChange}
+              {...register('email')}
             />
           </div>
           <div className="grid gap-1">
@@ -119,9 +98,7 @@ export function RegisterForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoCorrect="off"
               disabled={isLoading}
-              name="password"
-              value={data.password}
-              onChange={handleChange}
+              {...register('password')}
             />
           </div>
           <Button disabled={isLoading}>

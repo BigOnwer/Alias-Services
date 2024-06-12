@@ -7,11 +7,11 @@ const userSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     email: z.string().email('Invalid email format'),
     password: z.string().optional(),
-})
+});
 
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(request: NextRequest) {
     const User = await getCurrentUser();
-    console.log(User);
+    console.log("Authenticated User:", User);
 
     if (!User?.email) {
         return NextResponse.json({
@@ -34,25 +34,20 @@ export async function POST(request: NextRequest, response: NextResponse) {
     }
 
     try {
-
-        const formData = await request.formData();
-        const data = {
-            name: formData.get('name') as string,
-            email: formData.get('email') as string,
-            password: formData.get('password') as string | null,
-        };
-
-        const parsedData = userSchema.parse(data);
+        const data = await request.json();
+        const {name, email} = data
 
         const updatedUser = await prisma.user.update({
             where: {
                 id: user.id,
             },
             data: {
-                name: parsedData.name,
-                email: parsedData.email,
+                name,
+                email,
             },
         });
+
+        console.log("User Updated:", updatedUser);
 
         return NextResponse.json({
             error: null,
@@ -60,11 +55,14 @@ export async function POST(request: NextRequest, response: NextResponse) {
         }, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
+            console.log("Validation Error:", error.errors);
             return NextResponse.json({
                 error: error.errors,
                 data: null,
             }, { status: 400 });
         }
+
+        console.error("Unexpected Error:", error);
 
         return NextResponse.json({
             error: 'Internal Server Error',
