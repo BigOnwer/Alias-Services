@@ -15,7 +15,7 @@ import { CardContext } from "@/Contexts/ChartsContext";
 
 const NewCardFormSchema = z.object({
     name: z.string().nonempty("Name is required"),
-    price: z.string().min(0, "Price must be a positive number"),
+    price: z.number(),
     sales: z.number(),
     type: z.enum(['income', 'outcome']),
 });
@@ -81,7 +81,7 @@ export function ContentDialog() {
                         />
                         <br />
                         <Input
-                            type="number"
+                            type="string"
                             placeholder="Price"
                             {...register('price', { valueAsNumber: true })}
                             disabled={isLoading}
