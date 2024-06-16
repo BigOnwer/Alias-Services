@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await request.json()
-    let { price, type } = data
+    let { price, type, name, sales } = data
 
     if (!price) {
         return NextResponse.json("Dados inválidos.", { status: 400 })
@@ -33,8 +33,10 @@ export async function POST(request: NextRequest) {
 
     const post = await prisma.chartValue.create({
         data: {
+            name,
             price,
             type,
+            sales,
             author: {
                 connect: {
                     id: user.id

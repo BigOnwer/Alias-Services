@@ -4,9 +4,8 @@ import creattingWebSite from '@/assets/creatingSite.png';
 
 export function Buy() {
     return(
-        <div className="h-screen">
-            <br /><br /><br /><br /><br />
-            <main className="flex justify-center">
+        <div className="h-screen flex items-center justify-center w-full">
+            <main className="flex justify-center flex-wrap gap-2">
                 <ServicesComponent
                 title="Business Dashboard"
                 description="Find out how your company's results are going"

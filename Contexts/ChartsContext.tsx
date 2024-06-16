@@ -5,15 +5,20 @@ import { API } from "@/lib/axios";
 
 interface Chart {
     id: string
+    name: string
     type: 'income' | 'outcome'
-    price: string
+    price: number
+    sales: number // Adiciona a propriedade sales
     createdAt: string
 }
 
 interface CreateChartValueProps {
-    price: number;
+    name: string
+    price: number
     type: 'income' | 'outcome'
+    sales: number // Adiciona a propriedade sales
 }
+
 
 interface ChartContextType {
     card: Chart[]
@@ -31,12 +36,15 @@ export function CardProvider({ children }: ChartProviderProps) {
     const [card, setCard] = useState<Chart[]>([]);
 
     async function CreateCard(data: CreateChartValueProps) {
-        const { price, type } = data;
+        const { price, type, name, sales } = data;
 
         try {
             const response = await API.post('value', {
+                name,
                 price,
                 type,
+                sales,
+                createdAt: new Date()
             });
             setCard((state) => [response.data, ...state]);
         } catch (error) {

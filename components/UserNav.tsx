@@ -22,16 +22,16 @@ type UserDropdownProps = {
 }
 
 export function UserNav({ user }: UserDropdownProps) {
-  const router = useRouter();
-  const [loggingOut, setLoggingOut] = useState(false);
+  const router = useRouter()
+  const [loggingOut, setLoggingOut] = useState(false)
 
-  if (!user) return null; // Adicionado "null" para evitar renderização sem retorno válido
+  if (!user) return null
 
   async function logout() {
-    setLoggingOut(true);
-    await signOut({ redirect: false });
-    router.push('/login');
-    setLoggingOut(false);
+    setLoggingOut(true)
+    await signOut({ redirect: false })
+    router.push('/login')
+    setLoggingOut(false)
   }
 
   return (
@@ -43,7 +43,11 @@ export function UserNav({ user }: UserDropdownProps) {
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={user.image as string} alt={user.name as string} />
-            <AvatarFallback>U</AvatarFallback>
+            {user.name &&(
+            <AvatarFallback>
+              {user?.name[0]}
+            </AvatarFallback>
+            )}
           </Avatar>
 
           <div className="flex flex-col flex-1 space-y-1 text-left">
@@ -67,17 +71,82 @@ export function UserNav({ user }: UserDropdownProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Settings className="w-3 h-3 mr-3" />
-            Configurações
+        <a href="/settings" className='flex items-center'>
+          <DropdownMenuItem className='w-full cursor-pointer'>
+              <Settings className="w-3 h-3 mr-3" />
+              Settings
           </DropdownMenuItem>
+          </a>
           <DropdownMenuItem>
             <RocketIcon className="w-3 h-3 mr-3" />
             Upgrade
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem onClick={logout} className='cursor-pointer'>
+          <LockKeyhole className="w-3 h-3 mr-3" />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+
+export function AvatarNav({ user }: UserDropdownProps) {
+  const router = useRouter()
+  const [loggingOut, setLoggingOut] = useState(false)
+
+  if (!user) return null
+
+  async function logout() {
+    setLoggingOut(true)
+    await signOut({ redirect: false })
+    router.push('/login')
+    setLoggingOut(false)
+  }
+
+  return(
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button
+        variant="link"
+        className="relative h-12 flex items-center justify-between space-x-1 p-1 border-black dark:border-white"
+        >
+          <Avatar className="flex items-center justify-center">
+              <AvatarImage src={user.image as string} alt={user.name as string} className='rounded-full w-full h-full object-cover' />
+            {user.name && (
+              <AvatarFallback className='rounded-full w-full h-full flex items-center justify-center'>
+                {user?.name[0]}
+              </AvatarFallback>
+            )}
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{user.name}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {user.email}
+            </p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+        <a href="/settings" className='flex items-center'>
+          <DropdownMenuItem className='w-full cursor-pointer'>
+              <Settings className="w-3 h-3 mr-3" />
+              Settings
+          </DropdownMenuItem>
+          </a>
+          <DropdownMenuItem>
+            <RocketIcon className="w-3 h-3 mr-3" />
+            Upgrade
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={logout} className='cursor-pointer'>
           <LockKeyhole className="w-3 h-3 mr-3" />
           Log out
         </DropdownMenuItem>

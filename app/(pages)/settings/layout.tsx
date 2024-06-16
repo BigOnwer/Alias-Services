@@ -6,7 +6,7 @@ export default async function Layout({ children }: PropsWithChildren) {
   const user = await getCurrentUser()
 
   return (
-    <div className="grid grid-cols-[14rem_1fr]">
+    <div className="flex ">
       <MainSidebar user={user}/>
       <main>{children}</main>
     </div>

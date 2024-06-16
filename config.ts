@@ -1,23 +1,22 @@
+// config.ts
 export const config = {
     stripe: {
-        publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-        secretKey: process.env.STRIPE_SECRET_KEY,
-        webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+        secretKey: 'sk_test_4eC39HqLyjWDarjtT1zdp7dc',
         plans: {
             dashboard: {
-                priceId: 'price_1PQuvNLm54ylZe6N3cT1B6D9',
-                features: {
+                priceId: 'price_1PR1ejLm54ylZe6Np555a7zv',
+                quota: {
                     accessToDashboard: true,
-                    accessToWebsite: false,
-                },
+                    accessToWebsite: false
+                }
             },
             website: {
                 priceId: 'price_1PQuwnLm54ylZe6NW5tvAUwW',
-                features: {
+                quota: {
                     accessToDashboard: false,
-                    accessToWebsite: true,
-                },
+                    accessToWebsite: true
+                }
             },
-        },
-    },
+        }
+    }
 }

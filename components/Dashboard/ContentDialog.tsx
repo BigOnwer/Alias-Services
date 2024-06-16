@@ -14,16 +14,18 @@ import { useRouter } from "next/navigation";
 import { CardContext } from "@/Contexts/ChartsContext";
 
 const NewCardFormSchema = z.object({
-    price: z.number(),
+    name: z.string().nonempty("Name is required"),
+    price: z.number().min(0, "Price must be a positive number"),
+    sales: z.number(),
     type: z.enum(['income', 'outcome']),
-})
+});
 
-type newCardFormInput = z.infer<typeof NewCardFormSchema>
+type newCardFormInput = z.infer<typeof NewCardFormSchema>;
 
 export function ContentDialog() {
-    const router = useRouter()
-    const { CreateCard } = useContext(CardContext)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const router = useRouter();
+    const { CreateCard } = useContext(CardContext);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const {
         register,
@@ -32,25 +34,25 @@ export function ContentDialog() {
         control
     } = useForm<newCardFormInput>({
         resolver: zodResolver(NewCardFormSchema),
-    })
+    });
 
     async function handleRegister(data: newCardFormInput) {
-        setIsLoading(true)
+        setIsLoading(true);
         try {
-            const { price, type } = data
-            await CreateCard({ price, type })
-            toast.success("Sucesso ao criar novo valor")
-            router.refresh()
+            const { price, type, name, sales } = data;
+            await CreateCard({ price, type, name, sales });
+            toast.success("Sucesso ao criar novo valor");
+            reset();
         } catch (error) {
             toast.error("Erro ao tentar criar novo valor", {
                 action: {
                     label: 'Tente Novamente',
                     onClick: () => router.refresh()
                 }
-            })
-            console.log(error)
+            });
+            console.log(error);
         }
-        setIsLoading(false)
+        setIsLoading(false);
     }
 
     return (
@@ -71,13 +73,27 @@ export function ContentDialog() {
 
                 <AlertDialogOverlay>
                     <form onSubmit={handleSubmit(handleRegister)}>
-                        <Input placeholder="Name" disabled={isLoading} />
+                        <Input
+                            placeholder="Name"
+                            disabled={isLoading}
+                            {...register('name')}
+                            required
+                        />
                         <br />
                         <Input
-                            type="text"
+                            type="number"
                             placeholder="Price"
                             {...register('price', { valueAsNumber: true })}
                             disabled={isLoading}
+                            required
+                        />
+                        <br />
+                        <Input
+                            type="number"
+                            placeholder="Quantity Of Products"
+                            {...register('sales', { valueAsNumber: true })}
+                            disabled={isLoading}
+                            required
                         />
                         <br />
                         <Controller
