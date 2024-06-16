@@ -19,16 +19,10 @@ import { useContext } from "react";
 export function Product() {
   const { card } = useContext(CardContext);
 
-  // Ensure prices are numbers
-  const processedCard = card.map(product => ({
-    ...product,
-    price: parseFloat(product.price),
-  }));
-
-  const popularProducts = processedCard
-    .filter(product => product.type === 'income')
-    .sort((a, b) => b.sales - a.sales)
-    .slice(0, 3);
+  const popularProducts = card
+  .filter(product => product.type === 'income')
+  .sort((a, b) => b.sales - a.sales)
+  .slice(0, 3)
 
   return (
     <Tabs defaultValue="product" className="w-3/4">
@@ -38,7 +32,7 @@ export function Product() {
       </TabsList>
 
       <TabsContent value="product" className="flex flex-wrap gap-2 justify-between w-full">
-        {processedCard.map(product => (
+        {card.map(product => (
           <Card key={product.id} className="w-80">
             <CardHeader>
               <CardTitle>{product.name}</CardTitle>
