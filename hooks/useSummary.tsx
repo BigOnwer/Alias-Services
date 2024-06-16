@@ -11,14 +11,13 @@ export function useSummary() {
 
     const summary = card.reduce(
         (acc, card) => {
-            const price = parseFloat(card.price);
-            if (!isNaN(price)) {
+            if (!isNaN(card.price)) {
                 if (card.type === 'income') {
-                    acc.income += price;
-                    acc.total += price;
+                    acc.income += card.price;
+                    acc.total += card.price;
                 } else {
-                    acc.outcome += price;
-                    acc.total -= price;
+                    acc.outcome += card.price;
+                    acc.total -= card.price;
                 }
             }
 

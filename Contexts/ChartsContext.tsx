@@ -7,14 +7,14 @@ interface Chart {
     id: string
     name: string
     type: 'income' | 'outcome'
-    price: string
+    price: number
     sales: number
     createdAt: string
 }
 
 interface CreateChartValueProps {
     name: string
-    price: string
+    price: number
     type: 'income' | 'outcome'
     sales: number
 }
