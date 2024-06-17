@@ -41,7 +41,7 @@ export function RegisterForm({ className, ...props }: UserAuthFormProps) {
       const {name, email, password} = data
       handleRegister({name, email, password})
       toast.success('Success when trying to login')
-      router.push('/')
+      router.push('/dashboard/home')
     } catch (error) {
       console.log(error);
       toast.error('Error when trying to login', {

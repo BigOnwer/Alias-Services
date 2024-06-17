@@ -18,9 +18,9 @@ const NewCardFormSchema = z.object({
     price: z.number(),
     sales: z.number(),
     type: z.enum(['income', 'outcome']),
-});
+})
 
-type newCardFormInput = z.infer<typeof NewCardFormSchema>;
+type newCardFormInput = z.infer<typeof NewCardFormSchema>
 
 export function ContentDialog() {
     const router = useRouter();

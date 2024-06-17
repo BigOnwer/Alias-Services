@@ -65,7 +65,7 @@ export function UpdateForm() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button className="ml-auto" type="submit" disabled={isLoading}>
+                        <Button className="w-full" type="submit" disabled={isLoading}>
                             {isLoading ? "Saving..." : "Save Changes"}
                         </Button>
                     </CardFooter>

@@ -9,15 +9,15 @@ import { SettingsSidebar } from '../components/SettingsSiderbar'
 
 export default function Layout({ children }: PropsWithChildren) {
     return (
-        <DashboardPage>
+        <DashboardPage className=''>
             <DashboardPageHeader>
                 <DashboardPageHeaderTitle>Settings</DashboardPageHeaderTitle>
             </DashboardPageHeader>
             <DashboardPageMain>
                 <div className="container max-w-screen-lg">
-                    <div className="grid grid-cols-[10rem_1fr] gap-12">
-                    <SettingsSidebar />
-                    <div>{children}</div>
+                    <div>
+                        <SettingsSidebar/>
+                        <div>{children}</div>
                     </div>
                 </div>
             </DashboardPageMain>

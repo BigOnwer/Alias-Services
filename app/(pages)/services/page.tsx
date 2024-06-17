@@ -17,8 +17,8 @@ export default function Services() {
                 <Header currentPage="services"/>
             </header>
             <br /><br /><br /><br /> <br /><br /><br />
-            <main className="flex justify-center ">
-            <ServicesComponent
+            <main className="flex justify-center flex-wrap">
+                <ServicesComponent
                 title="Business Dashboard"
                 description="Find out how your company's results are going"
                 imageSrc={DashboardExemple}

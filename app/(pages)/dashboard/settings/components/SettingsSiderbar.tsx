@@ -20,24 +20,24 @@ export function SettingsSidebar() {
       <DashboardSidebarNav>
         <DashboardSidebarNavMain>
           <DashboardSidebarNavLink
-            href="/settings"
-            active={isActive('/settings')}
+            href="/dashboard/settings"
+            active={isActive('/dashboard/settings')}
             className='text-sm'
           >
             <User className='w-4 h-4 mr-2'/>
             My Profile
           </DashboardSidebarNavLink>
           <DashboardSidebarNavLink
-            href="/settings/theme"
-            active={isActive('/settings/theme')}
+            href="/dashboard/settings/theme"
+            active={isActive('/dashboard/settings/theme')}
             className='text-sm'
           >
             <SunMoon className='w-4 h-4 mr-2'/>
             Theme
           </DashboardSidebarNavLink>
           <DashboardSidebarNavLink
-            href="/settings/billing"
-            active={isActive('/settings/billing')}
+            href="/dashboard/settings/billing"
+            active={isActive('/dashboard/settings/billing')}
             className='text-sm'
           >
             <CreditCard className='w-4 h-4 mr-2'/>

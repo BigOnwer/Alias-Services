@@ -48,21 +48,21 @@ model Plan {
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  hashedPassword String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  accounts       Account[]
-  chartValue     ChartValue[]
+  id                       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name                     String?
+  email                    String?   @unique
+  emailVerified            DateTime?
+  image                    String?
+  hashedPassword           String?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+  accounts                 Account[]
+  chartValue               ChartValue[]
 
   stripeCustomerId         String?
   stripeSubscriptionId     String?
   stripeSubscriptionStatus String?
   stripePriceId            String?
 
-  plans      Plan[]
+  plans                    Plan[]
 }

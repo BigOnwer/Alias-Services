@@ -2,6 +2,7 @@ import { PageProduct } from "@/components/PageProduct";
 import ImageCreatingWebSite from '@/assets/creatingSite.png'
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Separator } from "@/components/ui/separator";
 
 export default function WebSites() {
     return(
@@ -20,6 +21,7 @@ export default function WebSites() {
                 />
             </main>
             <br /><br /><br />
+            <Separator/>
             <footer>
                 <Footer/>
             </footer>

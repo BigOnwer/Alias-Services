@@ -38,17 +38,17 @@ export function ThemeForm() {
   const onSubmit = form.handleSubmit(async (data) => {
     theme.setTheme(data.theme as 'light' | 'dark')
 
-    toast.success('Theme altterady with success')
+    toast.success('Theme altered successfully')
   })
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="space-y-8 flex justify-center w-full">
-        <div>
-            <Card className='w-full'>
+      <form onSubmit={onSubmit} className="space-y-8 flex justify-center w-full px-4 sm:px-0">
+        <div className="w-full max-w-md">
+          <Card className="w-full">
             <CardHeader>
-              <CardTitle>Tema</CardTitle>
-              <CardDescription>Selecione o tema para o painel.</CardDescription>
+              <CardTitle>Theme</CardTitle>
+              <CardDescription>Select the theme for the panel.</CardDescription>
             </CardHeader>
             <CardContent>
               <FormField
@@ -60,7 +60,7 @@ export function ThemeForm() {
                     <RadioGroup
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="grid max-w-md grid-cols-2 gap-8 pt-2"
+                      className="grid grid-cols-1 sm:grid-cols-2 gap-4"
                     >
                       <FormItem>
                         <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
@@ -123,12 +123,10 @@ export function ThemeForm() {
           <br />
           <SheetFooter className="mt-auto">
             <Button disabled={form.formState.isLoading} type="submit">
-              {form.formState.isSubmitting && 'Salvando...'}
-              {!form.formState.isSubmitting && 'Salvar alterações'}
+              {form.formState.isSubmitting ? 'Saving...' : 'Save changes'}
             </Button>
           </SheetFooter>
         </div>
-
       </form>
     </Form>
   )

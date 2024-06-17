@@ -2,6 +2,7 @@ import { PageProduct } from "@/components/PageProduct";
 import DashboardExample from '@/assets/dashboardExemple.png'
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Separator } from "@/components/ui/separator";
 
 export default function ChatBot() {
     return(
@@ -20,6 +21,7 @@ export default function ChatBot() {
                 />
             </main>
             <br /><br /><br />
+            <Separator/>
             <footer>
                 <Footer/>
             </footer>

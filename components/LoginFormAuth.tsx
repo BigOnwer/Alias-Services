@@ -37,7 +37,7 @@ export default function LoginForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true);
     try {
       await handleLogin(data)
-      router.push('/home')
+      router.push('/dashboard/home')
       toast.success('Success when trying to login')
     } catch (error) {
       console.log(error);

@@ -66,7 +66,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
             <DashboardSidebarMain className="flex flex-col flex-grow">
                 <DashboardSidebarNav>
                     <DashboardSidebarNavMain>
-                        <DashboardSidebarNavLink href="/home" active={isActive('/home')}>
+                        <DashboardSidebarNavLink href="/dashboard/home" active={isActive('/dashboard/home')}>
                             <span className='text-base flex items-center'>
                                 <HomeIcon className="w-5 h-5" />
                                 <p className={`ml-3 ${isOpen ? 'hidden' : ''}`}>Home</p>
@@ -80,7 +80,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
                             </span>
                         </DashboardSidebarNavLink>
 
-                        <DashboardSidebarNavLink href="/settings" active={isActive('/settings')}>
+                        <DashboardSidebarNavLink href="/dashboard/settings" active={isActive('/settings')}>
                             <span className='text-base flex items-center'>
                                 <Settings className="w-5 h-5" />
                                 <p className={`ml-3 ${isOpen ? 'hidden' : ''}`}>Settings</p>
@@ -98,7 +98,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
                     <DashboardSidebarNavMain>
                         {isOpen === false ? (
                             <div>
-                                <DashboardSidebarNavLink href="/">
+                                <DashboardSidebarNavLink href="/dashboard/support">
                                     Precisa de ajuda?
                                 </DashboardSidebarNavLink>
                                 <DashboardSidebarNavLink href="/">
@@ -107,7 +107,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
                             </div>
                         ) : (
                             <div className='space-y-3 flex flex-col items-center'>
-                                <a href="#" title='Precisa de ajuda?'><HelpCircle className='w-5 h-5'/></a>
+                                <a href="/dashboard/support" title='Precisa de ajuda?'><HelpCircle className='w-5 h-5'/></a>
                                 <a href="/" title='Site'><Globe className='w-5 h-5'/></a>
                             </div>
                         )}
