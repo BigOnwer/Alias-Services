@@ -35,22 +35,22 @@ export function AuthProviderContext({ children }: AuthProviderProps) {
     const [password, setPassword] = useState<any>()
     const router = useRouter()
 
-    async function handleLogin(user: IUser) {
-        const result = await signIn<"credentials">("credentials", {
-            ...user,
+    async function handleLogin(data: IUser) {
+        const res = await signIn<"credentials">("credentials", {
+            ...data,
             redirect: false,
         });
 
-        if (result?.error) {
-            console.error("Login failed:", result.error);
-            return;
-        }
+        if (res?.error) {
+            console.log(res.error)
+          } else {
+            router.push("/");
+          }
 
         setData([{
-            email: user.email || "",
+            email: "",
             password: "",
         }]);
-        setPassword(user.password)
     }
 
     async function handleRegister(user: IUser) {
