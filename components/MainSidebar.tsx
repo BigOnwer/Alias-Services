@@ -80,7 +80,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
                             </span>
                         </DashboardSidebarNavLink>
 
-                        <DashboardSidebarNavLink href="/dashboard/settings" active={isActive('/settings')}>
+                        <DashboardSidebarNavLink href="/dashboard/settings" active={isActive('/dashboard/settings')}>
                             <span className='text-base flex items-center'>
                                 <Settings className="w-5 h-5" />
                                 <p className={`ml-3 ${isOpen ? 'hidden' : ''}`}>Settings</p>

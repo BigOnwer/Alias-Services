@@ -1,3 +1,4 @@
+import BuyButton from "@/components/BuyButton"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -13,8 +14,8 @@ export default function Page() {
                 </CardHeader>
             </div>
             <div>
-                <CardContent className="text-4xl font-bold">R$120/mo</CardContent>
-                <Button type="submit" className="w-64">Subscribe</Button>
+                <CardContent className="text-4xl font-bold">R$70/mo</CardContent>
+                <BuyButton priceId={process.env.NEXT_PUBLIC_STRIPE_PRICE_ID || ""}/>
             </div>
         </Card>
       </form>

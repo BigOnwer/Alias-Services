@@ -6,12 +6,13 @@ import { Input } from "../ui/input";
 import { Controller, useForm } from "react-hook-form";
 import * as z from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { CardContext } from "@/Contexts/ChartsContext";
+
 
 const NewCardFormSchema = z.object({
     name: z.string().nonempty("Name is required"),
@@ -37,6 +38,11 @@ export function ContentDialog() {
     });
 
     async function handleRegister(data: newCardFormInput) {
+        /*if (!isSubscriptionActive) {
+            toast.error("Sua assinatura não está ativa. Ative a assinatura para registrar novos valores.");
+            return;
+        }*/
+
         setIsLoading(true);
         try {
             const { price, type, name, sales } = data;

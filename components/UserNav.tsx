@@ -71,7 +71,7 @@ export function UserNav({ user }: UserDropdownProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-        <a href="/settings" className='flex items-center'>
+        <a href="/dashboard/settings" className='flex items-center'>
           <DropdownMenuItem className='w-full cursor-pointer'>
               <Settings className="w-3 h-3 mr-3" />
               Settings

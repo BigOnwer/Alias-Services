@@ -7,7 +7,7 @@ export function Footer() {
         <footer className="bg-black text-white text-center p-6">
             <div className="mb-4 flex justify-center">
                 <a href="#" className="mx-2"><Facebook /></a>
-                <a href="#" className="mx-2"><Instagram/></a>
+                <a href="https://www.instagram.com/alias.services/" className="mx-2"><Instagram/></a>
                 <a href="#" className="mx-2"><Youtube/></a>
                 <a href="https://api.whatsapp.com/send/?phone=5531990641303&text=!help&type=phone_number&app_absent=0" className="mx-2"><Image src={WhatsappLogo} alt="" className=""/></a>
             </div>

@@ -2,7 +2,7 @@ import { useSummary } from "@/hooks/useSummary";
 import { ArrowUpCircle } from "lucide-react";
 import { Card,} from "../ui/card";
 import { priceFormatter } from "@/utils/formattersBRL";
-import { BarChart } from "./BarChart";
+import { BarChartComponent } from "./BarChart";
 import { Product } from './Products';
 
 export function Summary() {
@@ -48,7 +48,7 @@ export function Summary() {
                     </Card>
                 </div>
 
-                <div className="w-2/3 mb-24"><BarChart income={summary.income} outcome={summary.outcome} total={summary.total}/></div>
+                <div className="w-2/3 mb-24"><BarChartComponent income={summary.income} outcome={summary.outcome} total={summary.total}/></div>
 
                 <Product/>
         </div>

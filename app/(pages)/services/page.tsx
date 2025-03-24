@@ -22,14 +22,12 @@ export default function Services() {
                 title="Business Dashboard"
                 description="Find out how your company's results are going"
                 imageSrc={DashboardExemple}
-                buttonLabel="Buy"
-                buttonPush="https://buy.stripe.com/14k9CCahQdhS3KM000"
+                buttonPush={process.env.NEXT_PUBLIC_STRIPE_PRICE_ID as string}
                 />
                 <ServicesComponent
                 title="Creation of Websites"
                 description="Creating of Web Sites destined for business"
                 imageSrc={creattingWebSite}
-                buttonLabel="Buy"
                 buttonPush="/login"
                 />
             </main>
