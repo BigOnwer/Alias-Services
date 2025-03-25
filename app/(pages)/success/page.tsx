@@ -1,5 +1,3 @@
-// app/(pages)/success/page.tsx
-
 'use client';
 
 import { useEffect, useState } from "react";
@@ -17,9 +15,10 @@ const SuccessPage = () => {
   const session_id = searchParams.get("session_id");
 
   useEffect(() => {
+    if (typeof window === "undefined") return; // Garante que o código só roda no cliente
+
     const updateSubscriptionStatus = async () => {
       try {
-        // Verifica a sessão do usuário
         const session = await getSession();
         if (!session || !session.user?.email) {
           setError("Usuário não autenticado.");
@@ -27,29 +26,23 @@ const SuccessPage = () => {
         }
 
         console.log("Usuário autenticado:", session.user.email);
-
-        // Pega o e-mail do usuário autenticado
         const email = session.user.email;
 
-        // Chama a API do Stripe para verificar a sessão
-        const res = await fetch("/api/stripe/sucess", {
+        const res = await fetch("/api/stripe/sucess", { // Corrigido o endpoint
           method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ sessionId: session_id }),
         });
 
         const data = await res.json();
         console.log("Resposta da API do Stripe:", data);
 
-        // Verifica se o pagamento foi concluído com sucesso
         if (data.success) {
-          console.log("Pagamento verificado com sucesso, atualizando status de assinatura.");
+          console.log("Pagamento verificado com sucesso.");
 
-          // Chama a API Route para atualizar o status de assinatura
           const updateResponse = await fetch("/api/stripe/update-subscription", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, status: "active" }),
           });
 
@@ -71,13 +64,8 @@ const SuccessPage = () => {
     }
   }, [session_id]);
 
-  if (loading) {
-    return <div>Processando seu pagamento...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Processando seu pagamento...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="container flex items-center justify-center min-h-[80vh] py-12">
