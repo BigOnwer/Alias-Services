@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,43 +11,36 @@ import Link from "next/link";
 const SuccessPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const session_id = searchParams.get("session_id");
 
   useEffect(() => {
-    if (typeof window === "undefined") return; // Garante que o código só roda no cliente
+    if (status === "loading" || !session_id) return;
+    
+    if (!session || !session.user?.email) {
+      setError("Usuário não autenticado.");
+      return;
+    }
 
     const updateSubscriptionStatus = async () => {
       try {
-        const session = await getSession();
-        if (!session || !session.user?.email) {
-          setError("Usuário não autenticado.");
-          return;
-        }
-
-        console.log("Usuário autenticado:", session.user.email);
-        const email = session.user.email;
-
-        const res = await fetch("/api/stripe/sucess", { // Corrigido o endpoint
+        const email = session.user?.email;
+        
+        const res = await fetch("/api/stripe/sucess", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ sessionId: session_id }),
         });
 
         const data = await res.json();
-        console.log("Resposta da API do Stripe:", data);
 
         if (data.success) {
-          console.log("Pagamento verificado com sucesso.");
-
-          const updateResponse = await fetch("/api/stripe/update-subscription", {
+          await fetch("/api/stripe/update-subscription", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, status: "active" }),
           });
-
-          const updateData = await updateResponse.json();
-          console.log("Status de assinatura atualizado:", updateData);
 
           setLoading(false);
         } else {
@@ -59,10 +52,8 @@ const SuccessPage = () => {
       }
     };
 
-    if (session_id) {
-      updateSubscriptionStatus();
-    }
-  }, [session_id]);
+    updateSubscriptionStatus();
+  }, [session, status, session_id]);
 
   if (loading) return <div>Processando seu pagamento...</div>;
   if (error) return <div>{error}</div>;
