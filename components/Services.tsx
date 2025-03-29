@@ -6,16 +6,18 @@ interface Props{
     title: string
     description: string
     imageSrc: any
-    buttonPush: string
+    price: string
+    buttonPush?: string
 }
 
-export function ServicesComponent({ title, description, buttonPush, imageSrc}: Props) {
+export function ServicesComponent({ title, description, buttonPush, imageSrc, price}: Props) {
     return (
         <div className="border rounded-lg shadow-lg p-4 w-80 mx-5">
             <Image src={imageSrc} alt={title} className="w-full h-48 object-cover rounded-t-lg" />
             <h2 className="text-xl font-semibold mt-4">{title}</h2>
+            <h3>R${price}</h3>
             <p className="text-gray-600 my-5">{description}</p>
-            <BuyButton priceId={buttonPush}/>
+            <BuyButton priceId={buttonPush as string}/>
         </div>
     );
 }

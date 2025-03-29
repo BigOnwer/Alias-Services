@@ -17,7 +17,7 @@ export function Subscribe() {
           <p className="text-blue-900 dark:text-blue-400">and receive the benefits</p>
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Alias ​​Service offers customer support automation via WhatsApp and websites, as well as custom website creation. Our mission is to optimize the service and online presence of companies, ensuring agile and effective communication.
+          Alias ​​Service offers automated customer support via WhatsApp, as well as a business analytics system. Our mission is to optimize customer service and the online presence of companies, ensuring agile and effective communication.
         </p>
         <form action="https://api.staticforms.xyz/submit" method='post' className="flex flex-col space-y-5">
             <Input

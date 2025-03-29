@@ -20,15 +20,16 @@ export default function Services() {
             <main className="flex justify-center flex-wrap">
                 <ServicesComponent
                 title="Business Dashboard"
-                description="Find out how your company's results are going"
+                description="Find out how your company's results are going."
                 imageSrc={DashboardExemple}
+                price="70,00/m"
                 buttonPush={process.env.NEXT_PUBLIC_STRIPE_PRICE_ID as string}
                 />
                 <ServicesComponent
-                title="Creation of Websites"
-                description="Creating of Web Sites destined for business"
+                title="Chat Bot for WhatsApp"
+                description="Virtual assistant for your company via WhatsApp"
+                price="30,00/m"
                 imageSrc={creattingWebSite}
-                buttonPush="/login"
                 />
             </main>
             <br /><br /><br /><br />

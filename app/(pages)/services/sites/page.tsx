@@ -14,7 +14,7 @@ export default function WebSites() {
             <main>
                 <PageProduct
                     title="Creation of Websites 🌐"
-                    description="Hello! We offer a comprehensive website creation service that includes custom design, responsive development, SEO optimization, social media integration, customized functionalities, and ongoing support. Our goal is to strengthen your digital presence with a website that seamlessly operates on any device, is easily found on search engines, and enables effective engagement with your followers. With a dedicated and experienced team, we are ready to help you achieve your online goals. Get in touch with us to turn your vision into reality, taking your brand to new heights online!"
+                    description="A chatbot for businesses on WhatsApp automates customer service by answering frequently asked questions, processing orders, and providing 24/7 support. It improves efficiency, reduces costs, and streamlines communication, ensuring a fast and personalized experience for customers."
                     buttonText="Buy"
                     buttonLink="#"
                     image={ImageCreatingWebSite}

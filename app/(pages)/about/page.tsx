@@ -14,16 +14,12 @@ export default function About() {
                 <div className="container px-4 md:px-6">
                     <div className="grid gap-8 md:grid-cols-2 lg:gap-16">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Sobre Nós</h1>
+                        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About us</h1>
                         <p className="mt-4 text-gray-500 md:text-xl dark:text-gray-400">
-                        Somos uma empresa dedicada a fornecer soluções inovadoras e de alta qualidade para nossos clientes.
-                        Nossa missão é transformar a maneira como as empresas operam, impulsionando o sucesso através de
-                        tecnologia avançada e serviços personalizados.
+                            We are a company dedicated to providing innovative and high-quality solutions to our customers. Our mission is to transform the way companies operate, driving success through advanced technology and personalized services.
                         </p>
                         <p className="mt-4 text-gray-500 md:text-xl dark:text-gray-400">
-                        Fundada em 2023, a empresa cresceu rapidamente, tornando-se uma referência no mercado. Nosso
-                        compromisso com a excelência e a inovação nos permitiu conquistar a confiança de clientes em todo o
-                        país.
+                            Founded in 2023, the company has grown rapidly, becoming a reference in the market. Our commitment to excellence and innovation has allowed us to earn the trust of customers across the country.
                         </p>
                     </div>
                     <div>
