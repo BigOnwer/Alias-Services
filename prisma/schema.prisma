@@ -63,6 +63,7 @@ model User {
   stripeSubscriptionId     String?
   stripeSubscriptionStatus String? @default("inactive")
   stripePriceId            String?
+  stripeSessionId          String?
 
   plans                    Plan[]
 }

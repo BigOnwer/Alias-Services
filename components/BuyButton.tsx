@@ -22,7 +22,7 @@ export default function BuyButton({ priceId }: { priceId: string }) {
       if (data.url) {
         window.location.href = data.url; // Redireciona para o Stripe
       } else {
-        toast.error("Erro ao iniciar pagamento, tente novamente");
+        toast.error("Erro ao iniciar checkout");
       }
     } catch (error) {
       console.error(error);
