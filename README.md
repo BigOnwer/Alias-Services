@@ -188,6 +188,6 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 <div align="center">
 
-Feito com ☕ por **[BigOnwer](https://github.com/BigOnwer)**
+Feito com ☕ por **[Gustavo Leal](https://github.com/BigOnwer)**
 
 </div>
